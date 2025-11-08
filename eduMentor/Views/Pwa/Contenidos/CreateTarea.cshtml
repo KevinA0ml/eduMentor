@@ -40,7 +40,9 @@
         <input type="hidden" name="IdModulo" id="tareaIdModulo" value="@ViewBag.IdModulo" />
         <input type="hidden" name="Tipo" value="Tarea" />
         <input type="hidden" name="EsTarea" value="true" />
-        <input type="hidden" name="FechaCreacion" value="@Model.FechaCreacion.ToString("o")" />
+        <input type="hidden" name="FechaCreacion"
+               value="@(Model?.FechaCreacion.ToString("o") ?? DateTime.Now.ToString("o"))" />
+
         <input type="hidden" id="tareaJsonContenido" name="JsonContenido" value="@Model.JsonContenido" />
 
         <!-- Información básica -->

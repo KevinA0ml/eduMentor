@@ -111,7 +111,7 @@ namespace eduMentor.Controllers
         {
             ViewBag.IdModulo = idModulo;
 
-            // Verificar permisos
+            // 🔍 Verificar módulo y permisos
             var modulo = await _context.Modulo
                 .Include(m => m.Curso)
                 .FirstOrDefaultAsync(m => m.IdModulo == idModulo);
@@ -131,8 +131,22 @@ namespace eduMentor.Controllers
                 return RedirectToAction(nameof(Index), new { idModulo });
             }
 
-            return View("~/Views/Pwa/Contenidos/CreateTarea.cshtml");
+            // ✅ Enviar un modelo inicializado (evita NullReferenceException)
+            var nuevoContenido = new Contenido
+            {
+                IdModulo = idModulo,
+                Titulo = string.Empty,
+                Tipo = "Tarea",
+                EsTarea = true,
+                Peso = 1.0,
+                Orden = 1,
+                FechaCreacion = DateTime.Now,
+                JsonContenido = string.Empty
+            };
+
+            return View("~/Views/Pwa/Contenidos/CreateTarea.cshtml", nuevoContenido);
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
